@@ -15,7 +15,7 @@ console.log(`
               !'〈//｀Ｔ´', ＼ ｀'7'ｰr'
               ﾚ'ヽL__|___i,___,ンﾚ|ノ
                   ﾄ-,/  |___./
-                  'ｰ'    !_,.:
+                  'ｰ'    !_,.:zhaoolee
 `);
 
 /*
@@ -24,24 +24,50 @@ console.log(`
  */
 
 function initWidget(waifuPath = "/waifu-tips.json", apiPath = "") {
-	if (screen.width <= 768 || (localStorage.getItem("waifu-display") && new Date().getTime() - localStorage.getItem("waifu-display") <= 86400000)) {
+
+    
+  // 原本是小于768不显示, 改成小于76不显示
+	if (screen.width <= 76 || (localStorage.getItem("waifu-display") && new Date().getTime() - localStorage.getItem("waifu-display") <= 86400000)) {
 		return;
 	}
 	localStorage.removeItem("waifu-display");
-	sessionStorage.removeItem("waifu-text");
-	$("body").append(`<div id="waifu">
-			<div id="waifu-tips"></div>
-			<canvas id="live2d" width="300" height="300"></canvas>
-			<div id="waifu-tool">
-				<span class="fa fa-lg fa-comment"></span>
-				<span class="fa fa-lg fa-paper-plane"></span>
-				<span class="fa fa-lg fa-user-circle"></span>
-				<span class="fa fa-lg fa-street-view"></span>
-				<span class="fa fa-lg fa-camera-retro"></span>
-				<span class="fa fa-lg fa-info-circle"></span>
-				<span class="fa fa-lg fa-times"></span>
-			</div>
-		</div>`);
+  sessionStorage.removeItem("waifu-text");
+  
+  // 大于768 看板娘尺寸为300*300
+  if(screen.width >= 768){
+    $("body").append(`<div id="waifu">
+        <div id="waifu-tips"></div>
+        <canvas id="live2d" width="300" height="300"></canvas>
+        <div id="waifu-tool">
+          <span class="fa fa-lg fa-comment"></span>
+          <span class="fa fa-lg fa-paper-plane"></span>
+          <span class="fa fa-lg fa-user-circle"></span>
+          <span class="fa fa-lg fa-street-view"></span>
+          <span class="fa fa-lg fa-camera-retro"></span>
+          <span class="fa fa-lg fa-info-circle"></span>
+          <span class="fa fa-lg fa-times"></span>
+        </div>
+      </div>`);
+  }
+
+  // 小于768看板娘尺寸为100*100
+  if(screen.width >= 768){
+    $("body").append(`<div id="waifu">
+        <div id="waifu-tips"></div>
+        <canvas id="live2d" width="100" height="100"></canvas>
+        <div id="waifu-tool">
+          <span class="fa fa-lg fa-comment"></span>
+          <span class="fa fa-lg fa-paper-plane"></span>
+          <span class="fa fa-lg fa-user-circle"></span>
+          <span class="fa fa-lg fa-street-view"></span>
+          <span class="fa fa-lg fa-camera-retro"></span>
+          <span class="fa fa-lg fa-info-circle"></span>
+          <span class="fa fa-lg fa-times"></span>
+        </div>
+      </div>`);
+  }
+
+
 
 	function registerEventListener() {
 		$("#waifu-tool .fa-comment").click(showHitokoto);
